@@ -17,9 +17,9 @@ struct SignupView: View {
             
             Spacer()
             
-            RoundedRectangle(cornerRadius: 8)
-                .fill(.pink)
-                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/,height: 100)
+            // RoundedRectangle(cornerRadius: 8)
+            //     .fill(.pink)
+            //     .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/,height: 100)
                 
             
             TextField("Enter email", text: $authViewModel.email)

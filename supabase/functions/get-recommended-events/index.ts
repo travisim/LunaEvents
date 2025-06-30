@@ -15,23 +15,11 @@ serve(async (req) => {
   try {
     const { user_id } = await req.json();
 
-    if (!user_id) {
-      return new Response(JSON.stringify({ error: "user_id is required." }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 400,
-      });
-    }
-
-    // Get user's profile embedding
-    const { data: profile, error: profileError } = await supabase
+    const { data: profile } = await supabase
       .from("profiles")
       .select("embedding")
       .eq("id", user_id)
       .single();
-
-    if (profileError) {
-      throw profileError;
-    }
 
     if (!profile.embedding) {
       return new Response(JSON.stringify([]), {
@@ -40,8 +28,7 @@ serve(async (req) => {
       });
     }
 
-    // Use the match_events function to get recommended events
-    const { data: events, error: eventsError } = await supabase.rpc(
+    const { data: events } = await supabase.rpc(
       "match_events",
       {
         query_embedding: profile.embedding,
@@ -50,21 +37,12 @@ serve(async (req) => {
       }
     );
 
-    if (eventsError) {
-      throw eventsError;
-    }
-
     return new Response(JSON.stringify(events || []), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
   } catch (error) {
-    console.error("Error in get-recommended-events function:", error);
-    const errorMessage =
-      error instanceof Error
-        ? error.message
-        : "An unexpected error occurred while fetching recommended events.";
-    return new Response(JSON.stringify({ error: errorMessage }), {
+    return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,
     });

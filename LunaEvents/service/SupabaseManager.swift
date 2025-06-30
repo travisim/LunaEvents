@@ -18,10 +18,6 @@ class SupabaseManager {
             supabaseURL: URL(string: "https://iqfcfhftrwdgipjdlssv.supabase.co")!,
             supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxZmNmaGZ0cndkZ2lwamRsc3N2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMDcxMDYsImV4cCI6MjA2NjU4MzEwNn0.lgvBf8CW5pv9dicFAfh00pfFr-C9uk6GtOKtvnR9Yfk"
         )
-        
-        let customDecoder = JSONDecoder()
-        customDecoder.dateDecodingStrategy = .iso8601
-//        self.client.customDecoder = customDecoder
     }
     
     func updateLocation(latitude: Double, longitude: Double) async {
